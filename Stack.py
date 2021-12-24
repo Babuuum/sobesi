@@ -29,27 +29,28 @@ class Stack:
     def size(self):
         return len(self.values)
 
-
-
-str_1 = "(((([{}]))))"
-
-def mb_balanced(my_str):
-    my_list = []
-
-    for item in my_str:
-        my_list.append(item)
-
-    my_stEck = Stack(my_list)
-
-    if my_stEck.values.count("(") == my_stEck.values.count(")"):
-        if my_stEck.values.count("{") == my_stEck.values.count("}"):
-            if my_stEck.values.count("[") == my_stEck.values.count("]"):
-                print("Сбалансированно")
+    def mb_balanced(self):
+        cache = []
+        crutch = {')': '(', '}': '{', ']': '['}
+        while self.is_empty() != True:
+            if  self.peek() in crutch and crutch[self.peek()] not in cache:
+                return ("Несбалансированно")
+            elif self.peek() in crutch and crutch[self.peek()] in cache:
+                cache.remove(crutch[self.pop()])
             else:
-                print("Несбалансированно")
-        else:
-            print("Несбалансированно")
-    else:
-        print("Несбалансированно")
+                cache.append(self.pop())
+        return ("Сбалансированно")
 
-mb_balanced(str_1)
+
+
+str_1 = "}{}{[]"
+my_list = []
+cache_2 = []
+
+for item in str_1:
+    my_list.append(item)
+
+str_stack = Stack(my_list)
+print(str_stack.mb_balanced())
+
+
